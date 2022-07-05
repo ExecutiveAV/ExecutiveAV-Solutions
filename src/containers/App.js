@@ -1,12 +1,16 @@
 import React from 'react';
 import './App.scss'; 
 
-import Schedule from '../components/schedule/shcedule.component';
+import SideBar from '../components/sideBar/sideBar.component';
+
+import { Outlet, Link } from "react-router-dom";
+
 
 function App() {
   return (
     <section className='App' >
-      <Schedule />
+      <SideBar />
+      <Outlet />
     </section>
   );
 }

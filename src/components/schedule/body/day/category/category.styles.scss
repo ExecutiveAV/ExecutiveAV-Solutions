@@ -8,6 +8,9 @@
 
     &:last-of-type {
         border-right: 1px solid;
+        .category {
+            border-right: none;
+        }
     }
 
     & .schedule {
@@ -15,7 +18,12 @@
         flex-direction: column;
         justify-content: space-around;
         flex: 1;
-        font-size: 12px;
+        font-size: 16px;
+
+        &__item {
+        // height: 18px;
+
+        }
     }
 
     & .schedule:nth-of-type(even) {
