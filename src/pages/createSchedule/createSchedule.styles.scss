@@ -2,4 +2,11 @@
     display: flex;
     width: 100%;
     flex-direction: row;
+
+    &__titleContainer {
+        height: 73px;
+        margin-top: 11px;
+        margin-left: 23px;
+        font-size: 64px;
+    }
 }

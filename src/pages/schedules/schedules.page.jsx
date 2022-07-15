@@ -11,7 +11,9 @@ const Schedules = () => {
     return (
         <section className='scheduleContainer' >
             <ActionPanel >
-                <Title title={"Executive AV"} ></Title>
+                <section className='scheduleContainer__titleContainer' >
+                    <Title path="/" title={"Executive AV"} />
+                </section>
                 <FilePanel />
             </ActionPanel>
             <ViewPanel >

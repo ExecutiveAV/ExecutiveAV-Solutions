@@ -1,0 +1,11 @@
+.creatorPanel {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    display: flex;
+
+    &__initialQuestionButton {
+        margin-top: 86px;
+        text-align: center;
+    }
+}

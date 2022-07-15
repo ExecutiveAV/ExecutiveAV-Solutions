@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const MainButton = ({ content, pathTo }) => {
     return (
         <section className='mainButton' >
-            <Link to={pathTo} className='mainButton__content' >{content}</Link>
+            {pathTo ? <Link to={pathTo} className='mainButton__content' >{content}</Link> : <p to={pathTo} className='mainButton__content' >{content}</p>}
         </section>
     );
 };

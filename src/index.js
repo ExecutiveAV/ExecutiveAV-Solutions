@@ -24,7 +24,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter >
         <Routes >
-          <Route path="/" element={<App />} >
+          <Route exact path="/" element={<App />} >
             <Route index element={<Dashboard />} />
             <Route exact path='schedules' element={<Schedules />} />
             <Route exact path='schedules/new' element={<CreateSchedules />} />

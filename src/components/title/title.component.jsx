@@ -1,9 +1,11 @@
 import React from 'react';
 import './title.styles.scss';
 
-const Title = ({ title }) => {
+import { Link } from 'react-router-dom';
+
+const Title = ({ title, path }) => {
     return (
-        <section className='title' >{title}</section>
+        <Link to={path} className='title' >{title}</Link>
     );
 };
 

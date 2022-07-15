@@ -3,7 +3,7 @@ import './App.scss';
 
 import SideBar from '../components/sideBar/sideBar.component';
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 
 function App() {
