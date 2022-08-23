@@ -22,12 +22,11 @@ const previous = {
             option: "The Breakers"
         }
     ],
-    invoiceNumber: [
+    invoiceNumber:
         {            
             invNumber: "#2222_69",
-            option: "#2222_69"
+            option: 69
         },
-    ]
 }
 
 export default previous;

@@ -6,6 +6,15 @@
 
     &__initialQuestionButton {
         margin-top: 86px;
+        display: inline-flex;
+        width: 100%;
+        justify-content: space-between;
+        padding-left: 20px;
+    }
+
+    & .carousel {
+        width: 100%;
         text-align: center;
     }
+
 }
