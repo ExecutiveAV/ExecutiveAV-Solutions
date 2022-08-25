@@ -1,7 +1,7 @@
-import { Document, Page, Text, View, StyleSheet, Font } from 'react-pdf-browser';
+import { Document, Page, Text, View, StyleSheet, Font, } from 'react-pdf-browser';
 
 //Importing fontFaimily
-import GuillSansLightSource from '../../assets/fonts/GillSans-Light.ttf'; 
+import GuillSansLightSource from '../assets/fonts/GillSans-Light.ttf'; 
 
 //Registering fontFamily to the PDF creator
 Font.register({ family: "GillSans", src: GuillSansLightSource });
@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
         backgroundColor: '#FFF',
+        width: "100%",
         height: "100%",
         fontFamily : 'GillSans',
     },
@@ -106,81 +107,81 @@ const styles = StyleSheet.create({
 const SchedulePDF = () => (
 <Document>
     <Page size="A4" style={styles.page} orientation="landscape" >
-    <View style={styles.section}>
-        <Text style={styles.headerTitle} >Bluebird </Text>
-        <Text style={styles.headers} >#2222_69</Text>
-        <Text style={styles.headers} >Hyatt Regency</Text>
-        <Text style={styles.headers} >69 Ave 420 St</Text>
-        <Text style={styles.headers} >Miami, FL </Text>
-    </View>
-    <View style={styles.bodyTitle} >
-        <Text style={[styles.bodyTitleTitle, styles.s]} >Day</Text>
-        <Text style={[styles.bodyTitleTitle, styles.m]} >Date</Text>
-        <Text style={[styles.bodyTitleTitle, styles.s]} >Qty</Text>
-        <Text style={[styles.bodyTitleTitle, styles.m]} >Position</Text>
-        <Text style={[styles.bodyTitleTitle, styles.l]} >Tech</Text>
-        <Text style={[styles.bodyTitleTitle, styles.l]} >Time</Text>
-        <Text style={[styles.bodyTitleTitle, styles.s]} >Hrs</Text>
-    </View>
-    <View >
-        <View style={styles.day} >
-            <View style={[styles.category, styles.s]} >
-                <Text style={styles.categoryField} >1</Text>
-            </View>
-            <View style={[styles.category, styles.m]} >
-                <Text style={styles.categoryField} >06/06/22</Text>
-            </View>
-            <View style={[styles.category, styles.s]} >
-                <Text style={styles.categoryField} >1</Text>
-                <Text style={[styles.categoryField, styles.hasBorder]} >1</Text>
-            </View>
-            <View style={[styles.category, styles.m]} >
-                <Text style={styles.categoryField} >Tech</Text>
-                <Text style={[styles.categoryField, styles.hasBorder]} >Tech</Text>
-            </View>
-            <View style={[styles.category, styles.l]} >
-                <Text style={styles.categoryField} >Alejandro Baldwin</Text>
-                <Text style={[styles.categoryField, styles.hasBorder]} >Alejandro Labanino</Text>
-            </View>
-            <View style={[styles.category, styles.l]} >
-                <Text style={styles.categoryField} >6am - 4pm</Text>
-                <Text style={[styles.categoryField, styles.hasBorder]} >6am - 4pm</Text>
-            </View>
-            <View style={[styles.category, styles.s]} >
-                <Text style={styles.categoryField} >10</Text>
-                <Text style={[styles.categoryField, styles.hasBorder]} >10</Text>
-            </View>
+        <View style={styles.section}>
+            <Text style={styles.headerTitle} >Bluebird </Text>
+            <Text style={styles.headers} >#2222_69</Text>
+            <Text style={styles.headers} >Hyatt Regency</Text>
+            <Text style={styles.headers} >69 Ave 420 St</Text>
+            <Text style={styles.headers} >Miami, FL </Text>
         </View>
-        <View style={styles.bumper} ></View><View style={styles.day} >
-            <View style={[styles.category, styles.s]} >
-                <Text style={styles.categoryField} >2</Text>
-            </View>
-            <View style={[styles.category, styles.m]} >
-                <Text style={styles.categoryField} >06/06/22</Text>
-            </View>
-            <View style={[styles.category, styles.s]} >
-                <Text style={styles.categoryField} >1</Text>
-                <Text style={[styles.categoryField, styles.hasBorder]} >1</Text>
-            </View>
-            <View style={[styles.category, styles.m]} >
-                <Text style={styles.categoryField} >Tech</Text>
-                <Text style={[styles.categoryField, styles.hasBorder]} >Tech</Text>
-            </View>
-            <View style={[styles.category, styles.l]} >
-                <Text style={styles.categoryField} >Alejandro Baldwin</Text>
-                <Text wrap={false} style={[styles.categoryField, styles.hasBorder]} >Alejandro Labanino</Text>
-            </View>
-            <View style={[styles.category, styles.l]} >
-                <Text style={styles.categoryField} >6am - 4pm</Text>
-                <Text style={[styles.categoryField, styles.hasBorder]} >6am - 4pm</Text>
-            </View>
-            <View style={[styles.category, styles.s]} >
-                <Text style={styles.categoryField} >10</Text>
-                <Text style={[styles.categoryField, styles.hasBorder]} >10</Text>
-            </View>
+        <View style={styles.bodyTitle} >
+            <Text style={[styles.bodyTitleTitle, styles.s]} >Day</Text>
+            <Text style={[styles.bodyTitleTitle, styles.m]} >Date</Text>
+            <Text style={[styles.bodyTitleTitle, styles.s]} >Qty</Text>
+            <Text style={[styles.bodyTitleTitle, styles.m]} >Position</Text>
+            <Text style={[styles.bodyTitleTitle, styles.l]} >Tech</Text>
+            <Text style={[styles.bodyTitleTitle, styles.l]} >Time</Text>
+            <Text style={[styles.bodyTitleTitle, styles.s]} >Hrs</Text>
         </View>
-        <View style={styles.bumper} ></View>
-    </View>
+        <View >
+            <View style={styles.day} >
+                <View style={[styles.category, styles.s]} >
+                    <Text style={styles.categoryField} >1</Text>
+                </View>
+                <View style={[styles.category, styles.m]} >
+                    <Text style={styles.categoryField} >06/06/22</Text>
+                </View>
+                <View style={[styles.category, styles.s]} >
+                    <Text style={styles.categoryField} >1</Text>
+                    <Text style={[styles.categoryField, styles.hasBorder]} >1</Text>
+                </View>
+                <View style={[styles.category, styles.m]} >
+                    <Text style={styles.categoryField} >Tech</Text>
+                    <Text style={[styles.categoryField, styles.hasBorder]} >Tech</Text>
+                </View>
+                <View style={[styles.category, styles.l]} >
+                    <Text style={styles.categoryField} >Alejandro Baldwin</Text>
+                    <Text style={[styles.categoryField, styles.hasBorder]} >Alejandro Labanino</Text>
+                </View>
+                <View style={[styles.category, styles.l]} >
+                    <Text style={styles.categoryField} >6am - 4pm</Text>
+                    <Text style={[styles.categoryField, styles.hasBorder]} >6am - 4pm</Text>
+                </View>
+                <View style={[styles.category, styles.s]} >
+                    <Text style={styles.categoryField} >10</Text>
+                    <Text style={[styles.categoryField, styles.hasBorder]} >10</Text>
+                </View>
+            </View>
+            <View style={styles.bumper} ></View><View style={styles.day} >
+                <View style={[styles.category, styles.s]} >
+                    <Text style={styles.categoryField} >2</Text>
+                </View>
+                <View style={[styles.category, styles.m]} >
+                    <Text style={styles.categoryField} >06/06/22</Text>
+                </View>
+                <View style={[styles.category, styles.s]} >
+                    <Text style={styles.categoryField} >1</Text>
+                    <Text style={[styles.categoryField, styles.hasBorder]} >1</Text>
+                </View>
+                <View style={[styles.category, styles.m]} >
+                    <Text style={styles.categoryField} >Tech</Text>
+                    <Text style={[styles.categoryField, styles.hasBorder]} >Tech</Text>
+                </View>
+                <View style={[styles.category, styles.l]} >
+                    <Text style={styles.categoryField} >Alejandro Baldwin</Text>
+                    <Text wrap={false} style={[styles.categoryField, styles.hasBorder]} >Alejandro Labanino</Text>
+                </View>
+                <View style={[styles.category, styles.l]} >
+                    <Text style={styles.categoryField} >6am - 4pm</Text>
+                    <Text style={[styles.categoryField, styles.hasBorder]} >6am - 4pm</Text>
+                </View>
+                <View style={[styles.category, styles.s]} >
+                    <Text style={styles.categoryField} >10</Text>
+                    <Text style={[styles.categoryField, styles.hasBorder]} >10</Text>
+                </View>
+            </View>
+            <View style={styles.bumper} ></View>
+        </View>
     </Page>
 </Document>
 );

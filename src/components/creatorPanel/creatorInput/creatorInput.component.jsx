@@ -1,7 +1,7 @@
 import React from 'react';
 import './creatorInput.styles.scss';
 
-const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selected}) => {
+const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selected }) => {
     if (type === "options") {
         const selections = options.map(option => (
             selected ?
@@ -43,15 +43,40 @@ const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selec
                 <input type="date" className='creatorInputContainer__options' id={id} onChange={e => action(e.currentTarget.value)} />
             </section>
         )
-    } else if (type === "toggle") {
+    } else if (type === "toggle") {        
+        return (
+            <section className='creatorInputContainer' >
+                <label className='creatorInputContainer__label' >{label}</label>
+                <label className='switch' htmlFor={id} >
+                    {
+                        selected ? <input id={id} type={'checkbox'} onChange={ e => action(e.currentTarget.checked)} defaultChecked />:
+                        <input id={id} type={'checkbox'} onChange={ e => action(e.currentTarget.checked)} />
+                    }
+                    <span className="slider round" />
+                </label>
+            </section>
+        )
+    } else if (type === "time") {
         return (
             <section className='creatorInputContainer' >
                 <label className='creatorInputContainer__label' htmlFor={id} >{label}</label>
-                <label className='switch' >
-                    <input id={id} type={'checkbox'} />
-                    <span className="slider round" />
-                </label>
-                
+                <input type="time" className='creatorInputContainer__options' id={id} onChange={e => action(e.currentTarget.value)} />
+            </section>
+        )
+    } else if (type === "in&out") {
+        return (
+            <section className='creatorInputContainer' >
+                <label className='creatorInputContainer__label' htmlFor={id} >{label}</label>
+                <section className='creatorInputContainer__times' >
+                    <section className='creatorInputContainer__times__time' >
+                        <label >{subLabel[0]}</label>
+                        <input type="time" className='creatorInputContainer__options' id={`${id}A`} onChange={e => action[0](e.currentTarget.value)} />
+                    </section>
+                    <section className='creatorInputContainer__times__time' >
+                        <label >{subLabel[1]}</label>
+                        <input type="time" className='creatorInputContainer__options' id={`${id}B`} onChange={e => action[1](e.currentTarget.value)} />
+                    </section>
+                </section>
             </section>
         )
     }

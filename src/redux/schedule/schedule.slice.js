@@ -5,9 +5,9 @@ const initialState = {
     current: {
         day: 1,
         shift: 1,
+        employee: 1,
+        date: "",
     },
-    workingDay: {date: "", shifts: [],},
-    workingShift: {timeIn: "", timeOut: "", guys: [],},
 };
 
 const scheduleSlice = createSlice({
@@ -20,18 +20,18 @@ const scheduleSlice = createSlice({
         updateCurrentDay(state, action) {
             state.current.day = action.payload
         },
+        updateCurrentDate(state, action) {
+            state.current.date = action.payload
+        },
         updateCurrentShift(state, action) {
             state.current.shift = action.payload
         },
-        updateWorkingDay(state, action) {
-            state.workingDay = action.payload
-        },
-        updateWorkingShift(state, action) {
-            state.workingShift = action.payload
+        updateCurrentEmployee(state, action) {
+            state.current.employee = action.payload
         },
     }
 });
 
-export const { updateSchedule, updateCurrentDay, updateCurrentShift, updateWorkingDay, updateWorkingShift } = scheduleSlice.actions;
+export const { updateSchedule, updateCurrentDay, updateCurrentShift, updateCurrentDate, updateCurrentEmployee } = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

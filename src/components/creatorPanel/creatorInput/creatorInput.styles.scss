@@ -6,6 +6,27 @@
      &__label {
         font-size: 40px;
      }
+     
+     &__times {
+      display: inline-flex;
+
+      &__time {
+        display: inline-flex;
+
+        &:first-child {
+          margin-right: 20px;
+        }
+
+        & label {
+          font-size: 40px;
+          margin-right: 25px;
+        }
+
+        & .creatorInputContainer__options {
+          width: 164px;
+        }
+      }
+     }
 
      .switch {
       position: relative;

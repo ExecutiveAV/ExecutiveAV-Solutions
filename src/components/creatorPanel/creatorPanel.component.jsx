@@ -11,7 +11,7 @@ import CreatorCard from './creatorCard/creatorCard.component';
 import CreatorInput from './creatorInput/creatorInput.component';
 import MainButton from '../mainButton/mainButton.component';
 
-import { updateSchedule, updateCurrentSchedule, updateCurrentShift, updateWorkingDay, updateWorkingShift } from '../../redux/schedule/schedule.slice';
+import { updateSchedule, updateCurrentSchedule, updateCurrentShift, updateCurrentDay, updateCurrentDate, updateCurrentEmployee } from '../../redux/schedule/schedule.slice';
 import { updateKind } from '../../redux/kind/kind.slice';
 
 const CreatorPanel = () => {
@@ -47,7 +47,9 @@ const CreatorPanel = () => {
     const guysGenerator = () => ({
         name: "",
         position: "",
-        walkaway: false
+        walkaway: true,
+        timeIn: "",
+        timeOut: "",
     });
 
     const goToDays = () => {
@@ -69,16 +71,79 @@ const CreatorPanel = () => {
     const goToShift = (day, amountOfShifts) => {
         dispatch(updateKind("shifts"));
     };
-    
+
     const updateShiftPeople = (amountOfPeople) => {
         let temp = JSON.parse(JSON.stringify(scheduleDocument));
         let shift = shiftGenerator();
         for (let i = 0; i < amountOfPeople; i++) {
             shift.guys.push(guysGenerator());
         }
-        temp.daysData[0].shifts[0] = shift;
-        console.log(temp);
-        dispatch(updateSchedule(temp))
+        temp.daysData[current.day -1].shifts[current.shift -1] = shift;
+        dispatch(updateSchedule(temp));
+    };
+
+    const updateDate = newDate => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.daysData[current.day - 1].date = newDate;
+        dispatch(updateSchedule(temp));
+        dispatch(updateCurrentDate(newDate));
+    };
+
+    const updateEmployeeName = name => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.daysData[current.day - 1].shifts[current.shift - 1].guys[current.employee - 1].name = name;
+        dispatch(updateSchedule(temp));
+    };
+
+    const updateEmployeePosition = position => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.daysData[current.day - 1].shifts[current.shift - 1].guys[current.employee - 1].position = position;
+        dispatch(updateSchedule(temp));
+    };
+
+    const updateEmployeeWalkaway = walkaway => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.daysData[current.day - 1].shifts[current.shift - 1].guys[current.employee - 1].walkaway = walkaway;
+        dispatch(updateSchedule(temp));
+    };
+
+    const updateEmployeeInTime = time => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.daysData[current.day - 1].shifts[current.shift - 1].guys[current.employee - 1].timeIn = time;
+        dispatch(updateSchedule(temp));
+    };
+
+    const updateEmployeeOutTime = time => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.daysData[current.day - 1].shifts[current.shift - 1].guys[current.employee - 1].timeOut = time;
+        dispatch(updateSchedule(temp));
+    }
+
+    const goToNextEmployee = () => {
+        if (current.employee === scheduleDocument.daysData[current.day - 1].shifts[current.shift - 1].guys.length && current.shift !== scheduleDocument.daysData[current.day - 1].shifts.length) {
+            dispatch(updateCurrentEmployee(1));
+            dispatch(updateCurrentShift(current.shift + 1));
+            dispatch(updateKind("days"))
+        } else if (current.employee === scheduleDocument.daysData[current.day - 1].shifts[current.shift - 1].guys.length && current.shift === scheduleDocument.daysData[current.day - 1].shifts.length) {
+            dispatch(updateCurrentEmployee(1));
+            dispatch(updateCurrentShift(1));
+            dispatch(updateCurrentDay(current.day + 1))
+            dispatch(updateKind("days"))
+        } else {
+            dispatch(updateCurrentEmployee(current.employee + 1));
+        }
+    }
+
+    const addShift = (toggleValue) => {
+        if (toggleValue) {
+            let temp = JSON.parse(JSON.stringify(scheduleDocument));
+            temp.daysData[current.day -1].shifts.push(shiftGenerator());
+            dispatch(updateSchedule(temp));
+        } else if (!toggleValue) {
+            let temp = JSON.parse(JSON.stringify(scheduleDocument));
+            temp.daysData[current.day -1].shifts.pop();
+            dispatch(updateSchedule(temp));
+        }
     }
 
     const InitialQuestion = () => {
@@ -111,41 +176,37 @@ const CreatorPanel = () => {
     };
 
 
-    const DayQuestion = (day) => {
+    const DayQuestion = () => {
         return (
             <CreatorCard >
-                <CreatorInput type="date" label={`What date is it for Day ${day}`} />
+            {
+                current.shift === 1 ?
+                <CreatorInput type="date" label={`What date is it for Day ${current.day}`} action={updateDate} /> :
+                ""
+            }
+                
                 <CreatorInput selected={1} type="number" label={`How many people for shift ${current.shift}?`} lowest={1} action={updateShiftPeople} />
-                <CreatorInput type="toggle" label="Add extra shift?" />
+                <CreatorInput type="toggle" label="Add extra shift?" action={addShift} />
                 <section className="creatorPanel__initialQuestionButton" >
                     <MainButton content="Back" action={() => goBack()} />
-                    <MainButton content="Next" action={() => goToShift((day - 1), current.shift)} />
+                    <MainButton content="Next" action={() => goToShift((current.day - 1), current.shift)} />
                 </section>
             </CreatorCard>
         );
     }
 
-    const ShiftQuestion = () => {
+    const EmployeeQuestion = () => {
+
         return (
             <CreatorCard >
-                <CreatorInput type="time" label="Time in:" />
-                <CreatorInput type="time" label="Time Out:" />
+                <CreatorInput type="options" label={`Employee ${current.employee} for shift ${current.shift}?`} subLabel={`For ${current.date}`} options={previous.employees} action={updateEmployeeName} />
+                <CreatorInput type="options" label="What Position?" options={previous.positions} action={updateEmployeePosition} />
+                <CreatorInput type="in&out" label="Time?" subLabel={["In:", "Out:"]} action={[updateEmployeeInTime, updateEmployeeOutTime]} />
+                <CreatorInput type="toggle" label="Walkaway?" selected={true} action={updateEmployeeWalkaway} />
                 <section className="creatorPanel__initialQuestionButton" >
                     <MainButton content="Back" action={() => goBack()} />
-                    <MainButton content="Next" action={(e) => dispatch(updateCurrentShift(e))} />
+                    <MainButton content="Next" action={goToNextEmployee} />
                 </section>
-            </CreatorCard>
-        );
-    }
-
-    const employeeQuestion = call => {
-
-        return (
-            <CreatorCard >
-                <CreatorInput type="options" label={`Whos the ${call} employee you want working that day?`} subLabel={`For ${call}`} />
-                <CreatorInput type="options" label="What Position?" />
-                <CreatorInput type="time" label="Time?" />
-                <CreatorInput type="slider" label="Walkaway?" />
             </CreatorCard>
         )
     };
@@ -157,7 +218,7 @@ const CreatorPanel = () => {
                 kind === "initialQuestion" ? InitialQuestion() :
                 kind === "days" ? DayQuestion(current.day) :
                 kind === "backToInitialQuestion" ? BackToInitialQuestion(company, invNumber, location, daysData.length) :
-                kind === "shifts" ? ShiftQuestion() :
+                kind === "shifts" ? EmployeeQuestion() :
                 ""
             }
         </section>

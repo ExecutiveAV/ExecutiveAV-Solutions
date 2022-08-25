@@ -6,22 +6,18 @@ import ViewPanel from '../../components/viewPanel/viewPanel.component';
 import Title from "../../components/title/title.component";
 import CreatorPanel from '../../components/creatorPanel/creatorPanel.component';
 
-
-const CreateSchedule = () => {
-    return (
-        <section className='createScheduleContainer' >
-            <ActionPanel >
+const CreateSchedule = () => (
+    <section className='createScheduleContainer' >
+        <ActionPanel >
             <section className='createScheduleContainer__titleContainer' >
                 <Title path="/" title="Executive AV" />
             </section>
             <CreatorPanel />
-                    
-            </ActionPanel>
-            <ViewPanel >
                 
-            </ViewPanel>
-        </section>
+        </ActionPanel>
+        <ViewPanel >
+        </ViewPanel>
+    </section>
     );
-};
 
 export default CreateSchedule;

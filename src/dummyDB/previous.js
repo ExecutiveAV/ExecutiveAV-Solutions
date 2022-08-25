@@ -27,6 +27,24 @@ const previous = {
             invNumber: "#2222_69",
             option: 69
         },
+    employees: [{
+            option: "Marco Calle",
+        },{
+            option: "Alejandro Baldwin"
+        },{
+            option: "Daniel Baster"
+        },],
+    positions: [{
+            option: "Project Mannager",
+        },{
+            option: "Graphics"
+        },{
+            option: "Lead"
+        },{
+            option: "StageHand"
+        },{
+            option: "Projectionist"
+        },]
 }
 
 export default previous;
