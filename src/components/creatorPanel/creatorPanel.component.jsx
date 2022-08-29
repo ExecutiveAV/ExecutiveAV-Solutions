@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './creatorPanel.styles.scss';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -11,7 +11,7 @@ import CreatorCard from './creatorCard/creatorCard.component';
 import CreatorInput from './creatorInput/creatorInput.component';
 import MainButton from '../mainButton/mainButton.component';
 
-import { updateSchedule, updateCurrentSchedule, updateCurrentShift, updateCurrentDay, updateCurrentDate, updateCurrentEmployee } from '../../redux/schedule/schedule.slice';
+import { updateSchedule, updateCurrentShift, updateCurrentDay, updateCurrentDate, updateCurrentEmployee } from '../../redux/schedule/schedule.slice';
 import { updateKind } from '../../redux/kind/kind.slice';
 
 const CreatorPanel = () => {
@@ -110,12 +110,19 @@ const CreatorPanel = () => {
     const updateEmployeeInTime = time => {
         let temp = JSON.parse(JSON.stringify(scheduleDocument));
         temp.daysData[current.day - 1].shifts[current.shift - 1].guys[current.employee - 1].timeIn = time;
+        if (current.employee === 1) {
+            temp.daysData[current.day - 1].shifts[current.shift - 1].timeIn = time;
+        }
         dispatch(updateSchedule(temp));
     };
 
     const updateEmployeeOutTime = time => {
         let temp = JSON.parse(JSON.stringify(scheduleDocument));
         temp.daysData[current.day - 1].shifts[current.shift - 1].guys[current.employee - 1].timeOut = time;
+        
+        if (current.employee === 1) {
+            temp.daysData[current.day - 1].shifts[current.shift - 1].timeOut = time;
+        }
         dispatch(updateSchedule(temp));
     }
 

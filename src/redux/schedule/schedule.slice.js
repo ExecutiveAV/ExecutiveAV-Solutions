@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    scheduleDocument: {},
+    scheduleDocument: {
+        invNumber: "",
+        company: "",
+        location: "",
+        daysData: [{}],
+    },
     current: {
         day: 1,
         shift: 1,

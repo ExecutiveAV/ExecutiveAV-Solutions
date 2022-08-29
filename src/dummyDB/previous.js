@@ -17,8 +17,8 @@ const previous = {
     ],
     venue: [ {
             name: "The Breakers",
-            street: "",
-            city: "",
+            street: "1 S County Rd",
+            city: "Palm Beach, FL 33480",
             option: "The Breakers"
         }
     ],

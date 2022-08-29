@@ -5,6 +5,7 @@ import ActionPanel from '../../components/actionPanel/actionPanel.component';
 import ViewPanel from '../../components/viewPanel/viewPanel.component';
 import Title from "../../components/title/title.component";
 import CreatorPanel from '../../components/creatorPanel/creatorPanel.component';
+import SchedulePreview from '../../components/schedulePreview/shcedulePreview.component';
 
 const CreateSchedule = () => (
     <section className='createScheduleContainer' >
@@ -16,6 +17,7 @@ const CreateSchedule = () => (
                 
         </ActionPanel>
         <ViewPanel >
+            <SchedulePreview />
         </ViewPanel>
     </section>
     );
