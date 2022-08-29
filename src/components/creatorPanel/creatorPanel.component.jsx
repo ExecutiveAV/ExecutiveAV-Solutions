@@ -64,11 +64,40 @@ const CreatorPanel = () => {
         dispatch(updateKind("days"));
     };
 
+    const employeeGoBack = () => {
+        let lastEmployee;
+        let lastShift;
+        if (current.employee === 1 && current.shift === 1) {
+            dispatch(updateKind("days"));
+        } else if (current.employee === 1 && current.shift !== 1) {
+            dispatch(updateKind("days"));
+        } else {
+            dispatch(updateCurrentEmployee(current.employee - 1));
+        }
+    }
+
     const goBack = () => {
-        dispatch(updateKind("backToInitialQuestion"));
+        let lastEmployee;
+        let lastShift;
+        const thisShift = current.shift - 1;
+        if (current.day === 1 && current.shift === 1 && current.employee === 1 && kind === "days") {
+            dispatch(updateKind("backToInitialQuestion"));
+        } else if (current.employee === 1 && current.shift === 1 && current.day !== 1) {
+            lastEmployee = scheduleDocument.daysData[current.day - 2].shifts[scheduleDocument.daysData[current.day - 2].shifts.length - 1].guys.length;
+            lastShift = scheduleDocument.daysData[current.day - 2].shifts.length;
+            dispatch(updateCurrentShift(lastShift));
+            dispatch(updateCurrentEmployee(lastEmployee));
+            dispatch(updateCurrentDay(current.day - 1))
+            dispatch(updateKind("shifts"));
+        } else if (current.employee === 1 && current.shift !== 1) {
+            lastEmployee = scheduleDocument.daysData[current.day - 1].shifts[thisShift - 1].guys.length;
+            dispatch(updateCurrentShift(thisShift));
+            dispatch(updateCurrentEmployee(lastEmployee));
+            dispatch(updateKind("shifts"));
+        }
     };
 
-    const goToShift = (day, amountOfShifts) => {
+    const goToShift = () => {
         dispatch(updateKind("shifts"));
     };
 
@@ -196,7 +225,7 @@ const CreatorPanel = () => {
                 <CreatorInput type="toggle" label="Add extra shift?" action={addShift} />
                 <section className="creatorPanel__initialQuestionButton" >
                     <MainButton content="Back" action={() => goBack()} />
-                    <MainButton content="Next" action={() => goToShift((current.day - 1), current.shift)} />
+                    <MainButton content="Next" action={() => goToShift()} />
                 </section>
             </CreatorCard>
         );
@@ -211,7 +240,7 @@ const CreatorPanel = () => {
                 <CreatorInput type="in&out" label="Time?" subLabel={["In:", "Out:"]} action={[updateEmployeeInTime, updateEmployeeOutTime]} />
                 <CreatorInput type="toggle" label="Walkaway?" selected={true} action={updateEmployeeWalkaway} />
                 <section className="creatorPanel__initialQuestionButton" >
-                    <MainButton content="Back" action={() => goBack()} />
+                    <MainButton content="Back" action={employeeGoBack} />
                     <MainButton content="Next" action={goToNextEmployee} />
                 </section>
             </CreatorCard>
