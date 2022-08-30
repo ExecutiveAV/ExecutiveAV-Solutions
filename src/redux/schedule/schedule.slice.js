@@ -5,7 +5,7 @@ const initialState = {
         invNumber: "",
         company: "",
         location: "",
-        daysData: [{}],
+        daysData: [],
     },
     current: {
         day: 1,

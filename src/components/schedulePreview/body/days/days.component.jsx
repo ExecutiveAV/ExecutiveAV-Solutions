@@ -6,11 +6,6 @@ import checkIfUndefined from '../../../../utils/checkUndefined';
 
 const Days = ( { days } ) => {
 
-    // const totalDays = days.map(day => {
-    //     const { dayCounter, date, qty, times } = day;
-    //     return (<Day day={dayCounter} date={date} qty={qty} times={times} />)
-    // })
-
     let totalDays = [];
 
     const creator = (dates) => {

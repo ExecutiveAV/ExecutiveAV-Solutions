@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './creatorPanel.styles.scss';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import previous from '../../dummyDB/previous';
-
-import { Carousel } from 'react-responsive-carousel';
 
 import CreatorCard from './creatorCard/creatorCard.component';
 import CreatorInput from './creatorInput/creatorInput.component';
@@ -19,19 +17,8 @@ const CreatorPanel = () => {
     const { kind } = useSelector(state => state.kind);
     const { scheduleDocument, current } = useSelector(state => state.schedule)
     const { invNumber, company, location, daysData } = scheduleDocument;
-    const [client, setClient] = useState("");
-    const [invoiceNumber, setInvoiceNumber] = useState(0);
-    const [venue, setVenue] = useState("");
-    const [days, setDays] = useState(0);
 
     const dispatch = useDispatch();
-
-    const scheduleGenerator = (company, invNumber, location, daysData) => ({
-        invNumber,
-        company,
-        location,
-        daysData
-    });
 
     const dayGenerator = () => ({
         date: "",
@@ -52,15 +39,41 @@ const CreatorPanel = () => {
         timeOut: "",
     });
 
-    const goToDays = () => {
-        const daysData = [];
-        for (let i = 0; i < days; i++) {
-            let temp = dayGenerator();
-            temp.shifts.push(shiftGenerator());
-            daysData.push(temp);
+    const updateCompany = (company) => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.company = company;
+        dispatch(updateSchedule(temp))
+    }
+
+    const updateInvoice = (invoice) => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.invNumber = invoice;
+        dispatch(updateSchedule(temp));
+    }
+
+    const updateVenue = (venue) => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.location = venue;
+        dispatch(updateSchedule(temp));
+    }
+
+    const updateDays = (days) => {
+        let tempSchedule = JSON.parse(JSON.stringify(scheduleDocument));
+        if (tempSchedule.daysData.length < days) {
+            for (let i = 0; i < days - tempSchedule.daysData.length; i++) {
+                let temp = dayGenerator();
+                temp.shifts.push(shiftGenerator());
+                tempSchedule.daysData.push(temp);
+            }
+        } else if (tempSchedule.daysData.length > days) {
+            for (let i = 0; i < tempSchedule.daysData.length - days; i++) {
+                tempSchedule.daysData.pop();
+            }
         }
-        const schedule = scheduleGenerator(client, invoiceNumber, venue, daysData);
-        dispatch(updateSchedule(schedule));
+        dispatch(updateSchedule(tempSchedule));
+    }
+
+    const goToDays = () => {
         dispatch(updateKind("days"));
     };
 
@@ -81,7 +94,7 @@ const CreatorPanel = () => {
         let lastShift;
         const thisShift = current.shift - 1;
         if (current.day === 1 && current.shift === 1 && current.employee === 1 && kind === "days") {
-            dispatch(updateKind("backToInitialQuestion"));
+            dispatch(updateKind("initialQuestion"));
         } else if (current.employee === 1 && current.shift === 1 && current.day !== 1) {
             lastEmployee = scheduleDocument.daysData[current.day - 2].shifts[scheduleDocument.daysData[current.day - 2].shifts.length - 1].guys.length;
             lastShift = scheduleDocument.daysData[current.day - 2].shifts.length;
@@ -185,10 +198,10 @@ const CreatorPanel = () => {
     const InitialQuestion = () => {
         return (
             <CreatorCard>
-                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} action={setClient} />
-                <CreatorInput type="number" label={`Invoice #`} lowest={previous.invoiceNumber.option + 1} action={setInvoiceNumber} />
-                <CreatorInput type="options" label="What Venue?" options={previous.venue} action={setVenue} />
-                <CreatorInput type="number" label="How Many Days?" lowest={1} action={setDays} />
+                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} action={updateCompany} />
+                <CreatorInput type="number" label={`Invoice #`} lowest={previous.invoiceNumber.option + 1} action={updateInvoice} />
+                <CreatorInput type="options" label="What Venue?" options={previous.venue} action={updateVenue} />
+                <CreatorInput type="number" label="How Many Days?" lowest={1} action={updateDays} />
                 <section className="creatorPanel__initialQuestionButton" >
                     <MainButton content="Next" action={goToDays} />
                 </section>
@@ -200,10 +213,10 @@ const CreatorPanel = () => {
         
         return (
             <CreatorCard>
-                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} selected={company} action={setClient} />
-                <CreatorInput type="number" label={`Invoice #`} lowest={previous.invoiceNumber.option + 1} selected={inv} action={setInvoiceNumber} />
-                <CreatorInput type="options" label="What Venue?" options={previous.venue} selected={venue} action={setVenue} />
-                <CreatorInput type="number" label="How Many Days?" lowest={1} selected={days} action={setDays} />
+                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} selected={company} action={updateCompany} />
+                <CreatorInput type="number" label={`Invoice #`} lowest={previous.invoiceNumber.option + 1} selected={inv} action={updateInvoice} />
+                <CreatorInput type="options" label="What Venue?" options={previous.venue} selected={venue} action={updateVenue} />
+                <CreatorInput type="number" label="How Many Days?" lowest={1} selected={days} action={updateDays} />
                 <section className="creatorPanel__initialQuestionButton" >
                     <MainButton content="Next" action={goToDays} />
                 </section>
