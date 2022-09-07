@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import './creatorPanel.styles.scss';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
+import ReactPDF from 'react-pdf-browser';
+import SchedulePDF from '../../PDFs/SchedulePDF';
+
 import previous from '../../dummyDB/previous';
 
 import CreatorCard from './creatorCard/creatorCard.component';
@@ -173,11 +176,14 @@ const CreatorPanel = () => {
             dispatch(updateCurrentEmployee(1));
             dispatch(updateCurrentShift(current.shift + 1));
             dispatch(updateKind("days"))
-        } else if (current.employee === scheduleDocument.daysData[current.day - 1].shifts[current.shift - 1].guys.length && current.shift === scheduleDocument.daysData[current.day - 1].shifts.length) {
+        } else if (current.employee === scheduleDocument.daysData[current.day - 1].shifts[current.shift - 1].guys.length && current.shift === scheduleDocument.daysData[current.day - 1].shifts.length && current.day !== scheduleDocument.daysData.length) {
             dispatch(updateCurrentEmployee(1));
             dispatch(updateCurrentShift(1));
             dispatch(updateCurrentDay(current.day + 1))
             dispatch(updateKind("days"))
+        } else if (current.day === scheduleDocument.daysData.length && current.shift === scheduleDocument.daysData[current.day - 1].shifts.length && current.employee === scheduleDocument.daysData[current.day - 1].shifts[current.shift - 1].guys.length ) {
+            console.log("renderer", ReactPDF);
+            ReactPDF.renderToFile(<SchedulePDF schedule={scheduleDocument} />, `/test.pdf`);
         } else {
             dispatch(updateCurrentEmployee(current.employee + 1));
         }
