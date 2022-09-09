@@ -2,6 +2,21 @@ import React from 'react';
 import './creatorInput.styles.scss';
 
 const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selected }) => {
+
+    const portalOpener = async (portalType) => {
+        //openPortal(true);
+        //setPortalType(portalType);
+    };
+
+    const newSelected = async (value, action, entryType) => {
+        if (value === "New") {
+        //portalOpener(entryType);
+        //setKind("newEntryInterface");
+        };
+        // action(value);
+       
+    };
+
     if (type === "options") {
         const selections = options.map(option => (
             selected ?
