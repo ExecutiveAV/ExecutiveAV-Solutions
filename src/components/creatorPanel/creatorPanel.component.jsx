@@ -12,14 +12,19 @@ import CreatorCard from './creatorCard/creatorCard.component';
 import CreatorInput from './creatorInput/creatorInput.component';
 import MainButton from '../mainButton/mainButton.component';
 
+import Portal from '../../containers/createPortal/createPortal';
+import newEntryPortal from '../portals/newEntryPortal/newEntryPortal.component';
+
 import { updateSchedule, updateCurrentShift, updateCurrentDay, updateCurrentDate, updateCurrentEmployee } from '../../redux/schedule/schedule.slice';
 import { updateKind } from '../../redux/kind/kind.slice';
+import NewEntryPortal from '../portals/newEntryPortal/newEntryPortal.component';
 
 const CreatorPanel = () => {
 
     const { kind } = useSelector(state => state.kind);
-    const { scheduleDocument, current } = useSelector(state => state.schedule)
+    const { scheduleDocument, current } = useSelector(state => state.schedule);
     const { invNumber, company, location, daysData } = scheduleDocument;
+    const { isNewEntryPortalOpen } = useSelector(state => state.newEntryPortal);
 
     const dispatch = useDispatch();
 
@@ -204,9 +209,9 @@ const CreatorPanel = () => {
     const InitialQuestion = () => {
         return (
             <CreatorCard>
-                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} action={updateCompany} />
+                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} action={updateCompany} entryType="company" />
                 <CreatorInput type="number" label={`Invoice #`} lowest={previous.invoiceNumber.option + 1} action={updateInvoice} />
-                <CreatorInput type="options" label="What Venue?" options={previous.venue} action={updateVenue} />
+                <CreatorInput type="options" label="What Venue?" options={previous.venue} action={updateVenue} entryType="venue" />
                 <CreatorInput type="number" label="How Many Days?" lowest={1} action={updateDays} />
                 <section className="creatorPanel__initialQuestionButton" >
                     <MainButton content="Next" action={goToDays} />
@@ -219,9 +224,9 @@ const CreatorPanel = () => {
         
         return (
             <CreatorCard>
-                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} selected={company} action={updateCompany} />
+                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} selected={company} action={updateCompany} entryType="company" />
                 <CreatorInput type="number" label={`Invoice #`} lowest={previous.invoiceNumber.option + 1} selected={inv} action={updateInvoice} />
-                <CreatorInput type="options" label="What Venue?" options={previous.venue} selected={venue} action={updateVenue} />
+                <CreatorInput type="options" label="What Venue?" options={previous.venue} selected={venue} action={updateVenue} entryType="venue" />
                 <CreatorInput type="number" label="How Many Days?" lowest={1} selected={days} action={updateDays} />
                 <section className="creatorPanel__initialQuestionButton" >
                     <MainButton content="Next" action={goToDays} />
@@ -254,8 +259,8 @@ const CreatorPanel = () => {
 
         return (
             <CreatorCard >
-                <CreatorInput type="options" label={`Employee ${current.employee} for shift ${current.shift}?`} subLabel={`For ${current.date}`} options={previous.employees} action={updateEmployeeName} />
-                <CreatorInput type="options" label="What Position?" options={previous.positions} action={updateEmployeePosition} />
+                <CreatorInput type="options" label={`Employee ${current.employee} for shift ${current.shift}?`} subLabel={`For ${current.date}`} options={previous.employees} action={updateEmployeeName} entryType="tech" />
+                <CreatorInput type="options" label="What Position?" options={previous.positions} action={updateEmployeePosition} entryType="position" />
                 <CreatorInput type="in&out" label="Time?" subLabel={["In:", "Out:"]} action={[updateEmployeeInTime, updateEmployeeOutTime]} />
                 <CreatorInput type="toggle" label="Walkaway?" selected={true} action={updateEmployeeWalkaway} />
                 <section className="creatorPanel__initialQuestionButton" >
@@ -276,6 +281,9 @@ const CreatorPanel = () => {
                 kind === "shifts" ? EmployeeQuestion() :
                 ""
             }
+            <Portal >
+                <NewEntryPortal newEntryType="company" />
+            </Portal>
         </section>
     );
 };

@@ -1,20 +1,23 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import './creatorInput.styles.scss';
 
-const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selected }) => {
+import { updateNewEntryPortalStatus, updateNewEntryPortalType } from '../../../redux/portal/newEntryPortal.slice';
 
-    const portalOpener = async (portalType) => {
-        //openPortal(true);
-        //setPortalType(portalType);
+const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selected, entryType }) => {
+    const dispatch = useDispatch();
+
+    const portalOpener = (portalType) => {
+        dispatch(updateNewEntryPortalStatus(true));
+        dispatch(updateNewEntryPortalType(portalType));
     };
 
     const newSelected = async (value, action, entryType) => {
         if (value === "New") {
-        //portalOpener(entryType);
-        //setKind("newEntryInterface");
+        portalOpener(entryType);
+        } else {
+            action(value);
         };
-        // action(value);
-       
     };
 
     if (type === "options") {
@@ -28,13 +31,13 @@ const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selec
                 <label className='creatorInputContainer__label' htmlFor={id} >{label}</label>
                 {
                     selected ? 
-                    (<select className='creatorInputContainer__options' id={id} onChange={e => action(e.target.value)} >
+                    (<select className='creatorInputContainer__options' id={id} onChange={e => newSelected(e.target.value, action, entryType)} >
                         {
                             selections
                         }
                         <option className='creatorInputContainer__options__option new' >New</option>
                     </select>) :
-                    (<select className='creatorInputContainer__options' id={id} onChange={e => action(e.target.value)} >
+                    (<select className='creatorInputContainer__options' id={id} onChange={e => newSelected(e.target.value, action, entryType)} >
                     <option className='creatorInputContainer__options__option new' selected disabled > -- Choose an option --</option>
                         {
                             selections
