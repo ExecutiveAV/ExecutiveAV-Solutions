@@ -1,9 +1,14 @@
 import React from 'react';
+import './portalContainer.styles.scss';
 
-const PortalContainer = () => {
+const PortalContainer = ({ children }) => {
     return (
-        <section >
-            
+        <section className='portalContainer' >
+            <section className='portalContainer__container' >
+                {
+                    children
+                }
+            </section>
         </section>
     );
 };

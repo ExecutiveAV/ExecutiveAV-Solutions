@@ -15,6 +15,7 @@ const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selec
     const newSelected = async (value, action, entryType) => {
         if (value === "New") {
         portalOpener(entryType);
+        
         } else {
             action(value);
         };
@@ -23,8 +24,8 @@ const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selec
     if (type === "options") {
         const selections = options.map(option => (
             selected ?
-            <option className='creatoInputContainer__options__option' selected >{option.option}</option> :
-            <option className='creatoInputContainer__options__option' >{option.option}</option>
+            <option onClick={e => newSelected(e.target.value, action, entryType)} className='creatoInputContainer__options__option' selected >{option.option}</option> :
+            <option onClick={e => newSelected(e.target.value, action, entryType)} className='creatoInputContainer__options__option' >{option.option}</option>
         ))
         return (
             <section className='creatorInputContainer' >
@@ -35,14 +36,17 @@ const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selec
                         {
                             selections
                         }
-                        <option className='creatorInputContainer__options__option new' >New</option>
+                        <option onClick={e => {
+                            e.preventDefault();
+                            newSelected(e.target.value, action, entryType)
+                        }} className='creatorInputContainer__options__option new' >New</option>
                     </select>) :
                     (<select className='creatorInputContainer__options' id={id} onChange={e => newSelected(e.target.value, action, entryType)} >
                     <option className='creatorInputContainer__options__option new' selected disabled > -- Choose an option --</option>
                         {
                             selections
                         }
-                        <option className='creatorInputContainer__options__option new' >New</option>
+                        <option  onClick={e => newSelected(e.target.value, action, entryType)} className='creatorInputContainer__options__option new' >New</option>
                     </select>)
                 }
             </section>

@@ -281,9 +281,13 @@ const CreatorPanel = () => {
                 kind === "shifts" ? EmployeeQuestion() :
                 ""
             }
-            <Portal >
-                <NewEntryPortal newEntryType="company" />
-            </Portal>
+            {
+                isNewEntryPortalOpen ?
+                <Portal >
+                    <NewEntryPortal newEntryType="company" />
+                </Portal> :
+                ""
+            }
         </section>
     );
 };
