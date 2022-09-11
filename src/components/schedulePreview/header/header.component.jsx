@@ -9,7 +9,7 @@ const Header = ( { client, invoiceNumber, venue, venueAddress, venueCity } ) => 
     return (
         <section >
             <HeaderTitle client={client} />
-            <Headers content={invoiceNumber} />
+            <Headers content={`22${(new Date().getFullYear().toString()).slice(2, 4)}_${invoiceNumber}`} />
             <Headers content={venue} />
             <Headers content={venueAddress} gray />
             <Headers content={venueCity} gray />

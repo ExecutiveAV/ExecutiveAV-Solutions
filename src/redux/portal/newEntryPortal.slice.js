@@ -19,9 +19,12 @@ const newEntryPortalSlice = createSlice({
         updateNewEntryDocument(state, action) {
             state.newEntryDocument[action.payload.type] = action.payload.value
         },
+        clearNewEntryDocument(state, action) {
+            state.newEntryDocument = action.payload
+        },
     },
 });
 
-export const { updateNewEntryPortalStatus, updateNewEntryPortalType, updateNewEntryDocument } = newEntryPortalSlice.actions;
+export const { updateNewEntryPortalStatus, updateNewEntryPortalType, updateNewEntryDocument, clearNewEntryDocument } = newEntryPortalSlice.actions;
 
 export default newEntryPortalSlice.reducer;

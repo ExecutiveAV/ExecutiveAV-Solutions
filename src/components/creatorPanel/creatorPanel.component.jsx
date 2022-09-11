@@ -13,7 +13,6 @@ import CreatorInput from './creatorInput/creatorInput.component';
 import MainButton from '../mainButton/mainButton.component';
 
 import Portal from '../../containers/createPortal/createPortal';
-import newEntryPortal from '../portals/newEntryPortal/newEntryPortal.component';
 
 import { updateSchedule, updateCurrentShift, updateCurrentDay, updateCurrentDate, updateCurrentEmployee } from '../../redux/schedule/schedule.slice';
 import { updateKind } from '../../redux/kind/kind.slice';
@@ -24,7 +23,7 @@ const CreatorPanel = () => {
     const { kind } = useSelector(state => state.kind);
     const { scheduleDocument, current } = useSelector(state => state.schedule);
     const { invNumber, company, location, daysData } = scheduleDocument;
-    const { isNewEntryPortalOpen } = useSelector(state => state.newEntryPortal);
+    const { isNewEntryPortalOpen, newEntryPortalType } = useSelector(state => state.newEntryPortal);
 
     const dispatch = useDispatch();
 
@@ -284,7 +283,7 @@ const CreatorPanel = () => {
             {
                 isNewEntryPortalOpen ?
                 <Portal >
-                    <NewEntryPortal newEntryType="company" />
+                    <NewEntryPortal newEntryType={newEntryPortalType} />
                 </Portal> :
                 ""
             }

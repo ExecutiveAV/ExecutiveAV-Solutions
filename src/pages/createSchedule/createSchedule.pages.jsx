@@ -10,9 +10,22 @@ import SchedulePreview from '../../components/schedulePreview/shcedulePreview.co
 import { PDFViewer, PDFDownloadLink } from 'react-pdf-browser';
 import SchedulePDF from '../../PDFs/SchedulePDF';
 
+import firebaseApp from '../../utils/firebaseUtils/firebaseUtils';
+import { getFirestore, setDoc, doc } from 'firebase/firestore/lite';
+
+const db = getFirestore(firebaseApp);
+
 const CreateSchedule = () => {
-    const {scheduleDocument} = useSelector(state => state.schedule)
+    const { scheduleDocument } = useSelector(state => state.schedule)
     let Schedule = () => (<SchedulePDF schedule={scheduleDocument} />);
+
+    const saveNewDocument = async (db, scheduleDocument) => {
+        try {
+            await setDoc(doc(db, "schedules", `22${(new Date().getFullYear().toString()).slice(2, 4)}_${scheduleDocument.invNumber}`), scheduleDocument);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <section className='createScheduleContainer' >
@@ -28,13 +41,19 @@ const CreateSchedule = () => {
                 {/* <PDFViewer width="100%" >
                     <SchedulePDF schedule={scheduleDocument} />
                 </PDFViewer> */}
-                <PDFDownloadLink className='download' document={<Schedule />} fileName="TEST.pdf" >
-                    {
-                        ({blob, url, loading, error}) => {
-                            return loading ? "Loading" : "Download NOW!"
+                <section className='createScheduleContainer__buttonsContainer' >
+                    <PDFDownloadLink className='createScheduleContainer__buttonsContainer__button' document={<Schedule />} fileName="TEST.pdf" >
+                        {
+                            ({blob, url, loading, error}) => {
+                                return loading ? "Loading" : "Download"
+                            }
                         }
-                    }
-                </PDFDownloadLink>
+                    </PDFDownloadLink>
+                    <section onClick={e => saveNewDocument(db, scheduleDocument)} className='createScheduleContainer__buttonsContainer__button' >
+                        <p>Save</p>
+                    </section>
+                </section>
+
             </ViewPanel>
         </section>
     );};

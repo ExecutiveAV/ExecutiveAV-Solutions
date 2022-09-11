@@ -10,19 +10,26 @@
         font-size: 64px;
     }
 
-    .download {
+    &__buttonsContainer {
         position: absolute;
         bottom: 20px;
         right: 50%;
-        text-align: center;
-        width: 150px;
-        height: auto;
-        padding: 10px 5px;
-        border: solid 1px #8f8f8f;
-        z-index: 150;
-        border-radius: 15px;
-        background-color: #b5b5b5;
-        color: #FFF;
+        display: flex;
+        width: 320px;
+        justify-content: space-between;
         transform: translateX(50%);
+
+        &__button {
+            text-align: center;
+            width: 150px;
+            height: auto;
+            padding: 10px 5px;
+            border: solid 1px #8f8f8f;
+            z-index: 150;
+            border-radius: 15px;
+            background-color: #b5b5b5;
+            color: #FFF;
+            cursor: pointer;
+        }
     }
 }

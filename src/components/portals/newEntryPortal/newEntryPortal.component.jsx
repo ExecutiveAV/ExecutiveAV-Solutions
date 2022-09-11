@@ -8,17 +8,8 @@ import PopUpFooter from '../../popUpFooter/popUpFooter.component';
 
 import { updateNewEntryDocument } from '../../../redux/portal/newEntryPortal.slice';
 
-const newCompanyEntryGenerator = () => ({
-    companyName: "",
-    companyPOC: "",
-    street: "",
-    city: "",
-    state: "",
-    zipCode: 12345,
-})
-
 const NewEntryPortal = ({ newEntryType }) => {
-    const { newEntryDocument } = useSelector(state => state.newEntryPortal);
+    const { newEntryPortalType } = useSelector(state => state.newEntryPortal);
     const dispatch = useDispatch();
 
     const entryUpdater = (value, valueType) => {
@@ -31,11 +22,39 @@ const NewEntryPortal = ({ newEntryType }) => {
                 newEntryType === "company" ?
                 (
                     <>
-                        <PortalInput updater={value => entryUpdater(value, "companyName")} >
+                        <PortalInput updater={value => entryUpdater(value, "name")} >
                             Company Name
                         </PortalInput>
                         <PortalInput updater={value => entryUpdater(value, "companyPOC")} >
                             Company's POC
+                        </PortalInput>
+                        <PortalInput updater={value => entryUpdater(value, "email")} >
+                            Email
+                        </PortalInput>
+                        <PortalInput updater={value => entryUpdater(value, "street")} >
+                            Street
+                        </PortalInput>
+                        <section className='address' >
+                            <PortalInput updater={value => entryUpdater(value, "city")} >
+                                City
+                            </PortalInput>
+                            <PortalInput updater={value => entryUpdater(value, "state")} >
+                                State
+                            </PortalInput>
+                            <PortalInput updater={value => entryUpdater(value, "zipCode")} >
+                                Zip Code
+                            </PortalInput>
+                            <PortalInput updater={value => entryUpdater(value, "number")} >
+                                Phone Number
+                            </PortalInput>
+                        </section>
+                    </>
+                ) :
+                newEntryType === "venue" ?
+                (
+                    <>
+                        <PortalInput updater={value => entryUpdater(value, "name")} >
+                            Venue
                         </PortalInput>
                         <PortalInput updater={value => entryUpdater(value, "street")} >
                             Street
@@ -52,10 +71,48 @@ const NewEntryPortal = ({ newEntryType }) => {
                             </PortalInput>
                         </section>
                     </>
-                ) :
-                ""
+                ):
+                newEntryType === "tech" ?
+                (
+                    <>
+                        <PortalInput updater={value => entryUpdater(value, "name")} >
+                            Employee's Name
+                        </PortalInput>
+                        <PortalInput updater={value => entryUpdater(value, "email")} >
+                            Email
+                        </PortalInput>
+                        <PortalInput updater={value => entryUpdater(value, "street")} >
+                            Street
+                        </PortalInput>
+                        <section className='address' >
+                            <PortalInput updater={value => entryUpdater(value, "city")} >
+                                City
+                            </PortalInput>
+                            <PortalInput updater={value => entryUpdater(value, "state")} >
+                                State
+                            </PortalInput>
+                            <PortalInput updater={value => entryUpdater(value, "zipCode")} >
+                                Zip Code
+                            </PortalInput>
+                            <PortalInput updater={value => entryUpdater(value, "number")} >
+                                Phone Number
+                            </PortalInput>
+                        </section>
+                    </>
+                ):
+                newEntryType === "position" ?
+                (
+                    <>
+                        <PortalInput updater={value => entryUpdater(value, "name")} >
+                            Position
+                        </PortalInput>
+                        <PortalInput updater={value => entryUpdater(value, "rate")} >
+                            Rate
+                        </PortalInput>
+                    </>
+                ):""
             }
-            <PopUpFooter />
+            <PopUpFooter newEntryType={newEntryPortalType} />
         </PortalContainer>
     )
 };
