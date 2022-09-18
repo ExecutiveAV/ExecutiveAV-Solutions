@@ -21,7 +21,6 @@ const Day = ( { day, date, shifts } ) => {
                     return temp;
                 }
                         
-                console.log("hey",shift);
                 const qty = (<section className='schedule__item' >{shift["guys"].length}</section>);
                 const positions = checkIfUndefined(shift, (shift) => mapper(shift, "position"));
                 const techs = checkIfUndefined(shift, (shift) => mapper(shift, "name"))

@@ -4,6 +4,7 @@ const initialState = {
     isNewEntryPortalOpen: false,
     newEntryPortalType: "",
     newEntryDocument: {},
+    didUpload: false,
 };
 
 const newEntryPortalSlice = createSlice({
@@ -22,9 +23,12 @@ const newEntryPortalSlice = createSlice({
         clearNewEntryDocument(state, action) {
             state.newEntryDocument = action.payload
         },
+        didUploadChecker(state, action) {
+            state.didUpload = action.payload
+        }
     },
 });
 
-export const { updateNewEntryPortalStatus, updateNewEntryPortalType, updateNewEntryDocument, clearNewEntryDocument } = newEntryPortalSlice.actions;
+export const { updateNewEntryPortalStatus, updateNewEntryPortalType, updateNewEntryDocument, clearNewEntryDocument, didUploadChecker } = newEntryPortalSlice.actions;
 
 export default newEntryPortalSlice.reducer;

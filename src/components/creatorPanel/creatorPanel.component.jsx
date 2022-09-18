@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './creatorPanel.styles.scss';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -11,6 +11,7 @@ import previous from '../../dummyDB/previous';
 import CreatorCard from './creatorCard/creatorCard.component';
 import CreatorInput from './creatorInput/creatorInput.component';
 import MainButton from '../mainButton/mainButton.component';
+import EmployeeCard from './employeeCard/employeeCard.component';
 
 import Portal from '../../containers/createPortal/createPortal';
 
@@ -208,9 +209,9 @@ const CreatorPanel = () => {
     const InitialQuestion = () => {
         return (
             <CreatorCard>
-                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} action={updateCompany} entryType="company" />
+                <CreatorInput type="options" label="Which Company is it for?" action={updateCompany} entryType="company" />
                 <CreatorInput type="number" label={`Invoice #`} lowest={previous.invoiceNumber.option + 1} action={updateInvoice} />
-                <CreatorInput type="options" label="What Venue?" options={previous.venue} action={updateVenue} entryType="venue" />
+                <CreatorInput type="options" label="What Venue?" action={updateVenue} entryType="venue" />
                 <CreatorInput type="number" label="How Many Days?" lowest={1} action={updateDays} />
                 <section className="creatorPanel__initialQuestionButton" >
                     <MainButton content="Next" action={goToDays} />
@@ -223,9 +224,9 @@ const CreatorPanel = () => {
         
         return (
             <CreatorCard>
-                <CreatorInput type="options" label="Which Company is it for?" options={previous.clients} selected={company} action={updateCompany} entryType="company" />
+                <CreatorInput type="options" label="Which Company is it for?" selected={company} action={updateCompany} entryType="company" />
                 <CreatorInput type="number" label={`Invoice #`} lowest={previous.invoiceNumber.option + 1} selected={inv} action={updateInvoice} />
-                <CreatorInput type="options" label="What Venue?" options={previous.venue} selected={venue} action={updateVenue} entryType="venue" />
+                <CreatorInput type="options" label="What Venue?" selected={venue} action={updateVenue} entryType="venue" />
                 <CreatorInput type="number" label="How Many Days?" lowest={1} selected={days} action={updateDays} />
                 <section className="creatorPanel__initialQuestionButton" >
                     <MainButton content="Next" action={goToDays} />
@@ -254,22 +255,6 @@ const CreatorPanel = () => {
         );
     }
 
-    const EmployeeQuestion = () => {
-
-        return (
-            <CreatorCard >
-                <CreatorInput type="options" label={`Employee ${current.employee} for shift ${current.shift}?`} subLabel={`For ${current.date}`} options={previous.employees} action={updateEmployeeName} entryType="tech" />
-                <CreatorInput type="options" label="What Position?" options={previous.positions} action={updateEmployeePosition} entryType="position" />
-                <CreatorInput type="in&out" label="Time?" subLabel={["In:", "Out:"]} action={[updateEmployeeInTime, updateEmployeeOutTime]} />
-                <CreatorInput type="toggle" label="Walkaway?" selected={true} action={updateEmployeeWalkaway} />
-                <section className="creatorPanel__initialQuestionButton" >
-                    <MainButton content="Back" action={employeeGoBack} />
-                    <MainButton content="Next" action={goToNextEmployee} />
-                </section>
-            </CreatorCard>
-        )
-    };
-
     return (
         
         <section className='creatorPanel' >
@@ -277,7 +262,8 @@ const CreatorPanel = () => {
                 kind === "initialQuestion" ? InitialQuestion() :
                 kind === "days" ? DayQuestion(current.day) :
                 kind === "backToInitialQuestion" ? BackToInitialQuestion(company, invNumber, location, daysData.length) :
-                kind === "shifts" ? EmployeeQuestion() :
+                kind === "shifts" ?
+                    <EmployeeCard current={current} employeeGoBack={employeeGoBack} updateEmployeeWalkaway={updateEmployeeWalkaway} updateEmployeeInTime={updateEmployeeInTime} updateEmployeeName={updateEmployeeName} updateEmployeeOutTime={updateEmployeeOutTime} updateEmployeePosition={updateEmployeePosition} goToNextEmployee={goToNextEmployee} /> :
                 ""
             }
             {

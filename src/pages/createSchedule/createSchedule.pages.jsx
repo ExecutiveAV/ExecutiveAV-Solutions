@@ -10,7 +10,7 @@ import SchedulePreview from '../../components/schedulePreview/shcedulePreview.co
 import { PDFViewer, PDFDownloadLink } from 'react-pdf-browser';
 import SchedulePDF from '../../PDFs/SchedulePDF';
 
-import firebaseApp from '../../utils/firebaseUtils/firebaseUtils';
+import {firebaseApp} from '../../utils/firebaseUtils/firebaseUtils';
 import { getFirestore, setDoc, doc } from 'firebase/firestore/lite';
 
 const db = getFirestore(firebaseApp);

@@ -1,10 +1,15 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './creatorInput.styles.scss';
+
+import { db } from '../../../utils/firebaseUtils/firebaseUtils';
+import { getOptions } from '../../../utils/jsUtils/addUnderliner';
+import { collection, getDocs } from 'firebase/firestore';
+import { didUploadChecker } from '../../../redux/portal/newEntryPortal.slice';
 
 import { updateNewEntryPortalStatus, updateNewEntryPortalType } from '../../../redux/portal/newEntryPortal.slice';
 
-const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selected, entryType }) => {
+const CreatorInput = ({type, id, label, subLabel, action, lowest, selected, entryType }) => {
     const dispatch = useDispatch();
 
     const portalOpener = (portalType) => {
@@ -21,11 +26,47 @@ const CreatorInput = ({type, id, label, subLabel, options, action, lowest, selec
         };
     };
 
+    const [options, setOptions] = useState([]);
+    const [isFristLoad, setFirstLoad] = useState(true)
+    const { didUpload } = useSelector(state => state.newEntryPortal)
+
+
+    useEffect(()=> {
+        if (didUpload === true && isFristLoad) {
+            fetchDB(entryType);
+            setFirstLoad(false);
+            dispatch(didUploadChecker(false))
+        } else if (didUpload === true && !isFristLoad) {
+            fetchDB(entryType);
+            setFirstLoad(false);
+            dispatch(didUploadChecker(false))
+        } else if (didUpload === false && isFristLoad) {
+            fetchDB(entryType);
+            setFirstLoad(false);
+            dispatch(didUploadChecker(false))
+        }
+    }, [didUpload]);
+
+    const fetchDB = async (kind) => {
+        try {
+            const group = await getDocs(collection(db, kind));
+            const items = [];
+            group.forEach(doc => {
+                console.count(doc.id)
+                items.push([doc.id.replaceAll("_", " ")]);
+            })
+            setOptions(items);
+        } catch (e) {
+            console.error(e);
+        }
+        
+    }
+
     if (type === "options") {
         const selections = options.map(option => (
             selected ?
-            <option onClick={e => newSelected(e.target.value, action, entryType)} className='creatoInputContainer__options__option' selected >{option.option}</option> :
-            <option onClick={e => newSelected(e.target.value, action, entryType)} className='creatoInputContainer__options__option' >{option.option}</option>
+            <option onClick={e => newSelected(e.target.value, action, entryType)} className='creatoInputContainer__options__option' selected >{option}</option> :
+            <option onClick={e => newSelected(e.target.value, action, entryType)} className='creatoInputContainer__options__option' >{option}</option>
         ))
         return (
             <section className='creatorInputContainer' >

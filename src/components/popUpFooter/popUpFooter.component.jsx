@@ -2,12 +2,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import './popUpFooter.styles.scss';
 
-import firebaseApp from '../../utils/firebaseUtils/firebaseUtils';
-import { getFirestore, setDoc, doc } from 'firebase/firestore/lite';
+import { setDoc, doc } from 'firebase/firestore';
 
-import { updateNewEntryPortalStatus, clearNewEntryDocument } from '../../redux/portal/newEntryPortal.slice';
+import { updateNewEntryPortalStatus, clearNewEntryDocument, didUploadChecker } from '../../redux/portal/newEntryPortal.slice';
 
-const db = getFirestore(firebaseApp);
+import { firebaseApp } from '../../utils/firebaseUtils/firebaseUtils';
+import { getFirestore } from 'firebase/firestore';
+
+const db = getFirestore(firebaseApp)
 
 const PopUpFooter = ({ newEntryType }) => {
     const dispatch = useDispatch();
@@ -15,13 +17,15 @@ const PopUpFooter = ({ newEntryType }) => {
 
     const saveNewEntry = async (entryType, db, newEntryDocument) => {
         try {
-            await setDoc(doc(db, entryType, newEntryDocument.name.replace(" ", "_")),newEntryDocument);
+            await setDoc(doc(db, entryType, newEntryDocument.name.replace(" ", "_")), newEntryDocument);
             dispatch(updateNewEntryPortalStatus(false))
             dispatch(clearNewEntryDocument({}));
+            dispatch(didUploadChecker(true));
         } catch (error) {
-            console.error(error);
+            console.error("This is a popUpFooter error: ", error);
             dispatch(updateNewEntryPortalStatus(false))
             dispatch(clearNewEntryDocument({}));
+            dispatch(didUploadChecker(false));
         }
     }
 

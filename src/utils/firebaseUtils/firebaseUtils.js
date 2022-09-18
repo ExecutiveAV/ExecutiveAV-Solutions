@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from '../../firebaseKeys';
+import { getFirestore } from 'firebase/firestore';
 
-const firebaseApp = initializeApp(firebaseConfig);
-export default firebaseApp
+export const firebaseApp = initializeApp(firebaseConfig);
+
+export const db = getFirestore(firebaseApp);
