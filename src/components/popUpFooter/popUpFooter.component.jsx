@@ -13,11 +13,15 @@ const db = getFirestore(firebaseApp)
 
 const PopUpFooter = ({ newEntryType }) => {
     const dispatch = useDispatch();
-    const { newEntryDocument } = useSelector(state => state.newEntryPortal)
+    const { newEntryDocument } = useSelector(state => state.newEntryPortal);
+    const { scheduleDocument } = useSelector(state => state.schedule);
+
+    const { createdOn, editedOn } = scheduleDocument;
 
     const saveNewEntry = async (entryType, db, newEntryDocument) => {
         try {
             await setDoc(doc(db, entryType, newEntryDocument.name.replace(" ", "_")), newEntryDocument);
+
             dispatch(updateNewEntryPortalStatus(false))
             dispatch(clearNewEntryDocument({}));
             dispatch(didUploadChecker(true));

@@ -6,6 +6,8 @@ const initialState = {
         company: "",
         location: "",
         daysData: [],
+        createdOn: null,
+        editedOn: null,
     },
     current: {
         day: 1,
@@ -34,9 +36,15 @@ const scheduleSlice = createSlice({
         updateCurrentEmployee(state, action) {
             state.current.employee = action.payload
         },
+        updateCreatedOn(state, action) {
+            state.scheduleDocument.createdOn = action.payload
+        },
+        updateEditedOn(state, action) {
+            state.scheduleDocument.editedOn = action.payload
+        }
     }
 });
 
-export const { updateSchedule, updateCurrentDay, updateCurrentShift, updateCurrentDate, updateCurrentEmployee } = scheduleSlice.actions;
+export const { updateSchedule, updateCurrentDay, updateCurrentShift, updateCurrentDate, updateCurrentEmployee, updateCreatedOn, updateEditedOn } = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

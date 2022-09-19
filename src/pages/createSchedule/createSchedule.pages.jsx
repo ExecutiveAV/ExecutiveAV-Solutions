@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './createSchedule.styles.scss';
 
 import ActionPanel from '../../components/actionPanel/actionPanel.component';
@@ -12,6 +12,8 @@ import SchedulePDF from '../../PDFs/SchedulePDF';
 
 import {firebaseApp} from '../../utils/firebaseUtils/firebaseUtils';
 import { getFirestore, setDoc, doc } from 'firebase/firestore/lite';
+import { serverTimestamp } from 'firebase/firestore';
+import { updateCreatedOn, updateEditedOn } from '../../redux/schedule/schedule.slice';
 
 const db = getFirestore(firebaseApp);
 
@@ -19,9 +21,14 @@ const CreateSchedule = () => {
     const { scheduleDocument } = useSelector(state => state.schedule)
     let Schedule = () => (<SchedulePDF schedule={scheduleDocument} />);
 
+
+    const dispatch = useDispatch();
+
     const saveNewDocument = async (db, scheduleDocument) => {
+        dispatch(updateCreatedOn(new Date()));
+        dispatch(updateEditedOn(new Date()));
         try {
-            await setDoc(doc(db, "schedules", `22${(new Date().getFullYear().toString()).slice(2, 4)}_${scheduleDocument.invNumber}`), scheduleDocument);
+            await setDoc(doc(db, "schedules", `22${(new Date().getFullYear().toString()).slice(2, 4)}_${scheduleDocument.invNumber}`), {scheduleDocument});
         } catch (error) {
             console.error(error);
         }

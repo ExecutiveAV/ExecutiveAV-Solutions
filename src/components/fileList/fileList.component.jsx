@@ -3,19 +3,29 @@ import './fileList.styles.scss'
 
 import PrimaryText from './primaryText/primaryText.component';
 import FileOptions from '../fileOptions/fileOptions.component';
+import { Timestamp } from 'firebase/firestore';
 
 const FileList = ({ type, filesData }) => {
+    console.log(filesData);
     const files = filesData.map(file => {
         return (
             <section className='fileList__files__file' >
                 <section  className='fileList__files__file__withSubtitle' >
-                    <PrimaryText >{file.name}</PrimaryText>
-                    <PrimaryText primary={false} >{file.client}</PrimaryText>
+                    <PrimaryText >{`22${(new Date().getFullYear().toString()).slice(2, 4)}_${file.scheduleDocument.invNumber}`}</PrimaryText>
+                    <PrimaryText primary={false} >{file.scheduleDocument.company}</PrimaryText>
                 </section>
-                <PrimaryText >{file.createdOn.date}</PrimaryText>
+                <PrimaryText >{
+                    file.scheduleDocument.createdOn === null ?
+                    "Date not found" :
+                    new Date((file.scheduleDocument.createdOn).seconds*1000).getMonth()
+                    }</PrimaryText>
                 <section className='fileList__files__file__withSubtitle' >
-                    <PrimaryText >{file.lastEditedOn.date}</PrimaryText>
-                    <PrimaryText primary={false} >{file.lastEditedOn.time}</PrimaryText>
+                    <PrimaryText >{
+                        file.scheduleDocument.editedOn === null ?
+                        "Date not found" :
+                        new Date((file.scheduleDocument.editedOn).seconds*1000).getMonth()
+                    }</PrimaryText>
+                    {/* <PrimaryText primary={false} >{file.scheduleDocument.editedOn}</PrimaryText> */}
                 </section>
                 <FileOptions />
             </section>

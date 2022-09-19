@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import './creatorInput.styles.scss';
 
 import { db } from '../../../utils/firebaseUtils/firebaseUtils';
-import { getOptions } from '../../../utils/jsUtils/addUnderliner';
 import { collection, getDocs } from 'firebase/firestore';
 import { didUploadChecker } from '../../../redux/portal/newEntryPortal.slice';
 
