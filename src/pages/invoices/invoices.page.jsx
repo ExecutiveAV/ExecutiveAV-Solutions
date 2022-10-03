@@ -5,6 +5,8 @@ import ViewPanel from '../../components/viewPanel/viewPanel.component';
 import FilePanel from '../../components/filePanel/filePanel.component';
 import Title from '../../components/title/title.component';
 
+import InvoicePreview from '../../components/invoicePreview/invoicePreview.component';
+
 const Invoices = () => {
     return (
         <section className='scheduleContainer' >
@@ -12,9 +14,10 @@ const Invoices = () => {
                 <section className='scheduleContainer__titleContainer' >
                     <Title path="/" title={"Executive AV"} />
                 </section>
-                <FilePanel />
+                <FilePanel kind={"invoices"} />
             </ActionPanel>
             <ViewPanel >
+                <InvoicePreview />
             </ViewPanel>
         </section>
     );

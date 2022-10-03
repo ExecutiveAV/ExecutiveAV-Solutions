@@ -5,6 +5,7 @@ import ActionPanel from '../../components/actionPanel/actionPanel.component';
 import ViewPanel from '../../components/viewPanel/viewPanel.component';
 import FilePanel from '../../components/filePanel/filePanel.component';
 import Title from '../../components/title/title.component';
+import SchedulePreview from '../../components/schedulePreview/shcedulePreview.component';
 
 
 const Schedules = () => {
@@ -17,6 +18,7 @@ const Schedules = () => {
                 <FilePanel kind="schedules" />
             </ActionPanel>
             <ViewPanel >
+            <SchedulePreview />
             </ViewPanel>
         </section>
     );

@@ -19,6 +19,9 @@
 
             &__withSubtitle {
                 display: flex;
+                & a { 
+                    font-size: 32px;
+                }
             }
         }
     }

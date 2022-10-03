@@ -1,26 +1,29 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom"
 import './fileList.styles.scss'
 
 import PrimaryText from './primaryText/primaryText.component';
 import FileOptions from '../fileOptions/fileOptions.component';
 
 import {firebaseApp} from '../../utils/firebaseUtils/firebaseUtils';
-import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
+import { getFirestore,  doc, getDoc } from 'firebase/firestore';
+import { updateInvoice } from '../../redux/invoice/invoice.slice';
 import { updateSchedule } from '../../redux/schedule/schedule.slice';
+import { Link, redirect } from 'react-router-dom';
 
 const db = getFirestore(firebaseApp);
 
 const FileList = ({ type, filesData, kind }) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const handleClick = async (invNumber, kind) => {
         try {
             const file = await getDoc(doc(db, kind, invNumber));
-            dispatch(updateSchedule(file.data()));
-            navigate("/schedules/new")
+            if (kind === "invoices") {
+                dispatch(updateInvoice(file.data()));
+            } else if (kind === "schedules") {
+                dispatch(updateSchedule(file.data()));
+            }
         } catch (e) {
             console.error(e, invNumber, kind)
         }
@@ -40,11 +43,11 @@ const FileList = ({ type, filesData, kind }) => {
                     `${new Date(file.createdOn).getMonth()}/${new Date(file.createdOn).getDate()}/${new Date(file.createdOn).getFullYear()}`
                     }</PrimaryText>
                 <section className='fileList__files__file__withSubtitle' >
-                    <PrimaryText >{
+                    <Link to={`/${kind}/new`} >{
                         file.editedOn === null ?
                         "Date not found" :
                         `${new Date(file.editedOn).getMonth()}/${new Date(file.editedOn).getDate()}/${new Date(file.editedOn).getFullYear()}`
-                    }</PrimaryText>
+                    }</Link>
                     {/* <PrimaryText primary={false} >{file.scheduleDocument.editedOn}</PrimaryText> */}
                 </section>
                 <FileOptions />

@@ -14,7 +14,7 @@ const Dashboard = () => {
                     <Title path="/" title="Executive AV" />
                 </section>
                 <section className='dashboard__quickAcces' >
-                    <MainButton pathTo={""} content={"INVOICES"}/>
+                    <MainButton pathTo={"/invoices"} content={"INVOICES"}/>
                     <MainButton pathTo={""} content={"LEDGER"}/>
                     <MainButton pathTo={"/schedules"} content={"SCHEDULES"}/>
                 </section>

@@ -17,14 +17,14 @@ const FilePanel = ({kind}) => {
     const [files, setFiles] = useState([])
 
     useEffect(()=> {
-       fetchSchedules();
+       fetchFiles(kind);
     }, []);
 
-    const fetchSchedules = async () => {
+    const fetchFiles = async (kind) => {
         try {
-            const schedules = await getDocs(collection(db, "schedules"));
+            const files = await getDocs(collection(db, kind));
             const items = [];
-            schedules.forEach(doc => {
+            files.forEach(doc => {
                 items.push(doc.data());
             });
             setFiles(items);

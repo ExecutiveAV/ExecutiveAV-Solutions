@@ -26,7 +26,6 @@ const Day = ( { day, date, shifts } ) => {
                 const techs = checkIfUndefined(shift, (shift) => mapper(shift, "name"))
                 const timez = shift["guys"].map(tech => (<section className='schedule__item' >{`${shift.timeIn} - ${shift.timeOut}`}</section>));
                 let computedTime = parseInt(shift.timeOut.slice(0, 2)) - parseInt(shift.timeIn.slice(0, 2));
-                console.log(computedTime);
                 if (computedTime > 0 && computedTime < 6) {
                     computedTime = 5;
                 } else if (computedTime > 5 && computedTime < 11) {

@@ -46,12 +46,13 @@ const CreateSchedule = () => {
 
     const parseScheduleToInvoice = async schedule => {
         const { invNumber, company, location, daysData, createdOn, editedOn } = schedule;
+        let issuedDate;
         let days = [];
         //Go trough each day
-        await daysData.map(async day => {
+        for (let i = 0; i < daysData.length; i++) {
             let shifts = [];
             //Go trough each shift
-            await day.shifts.map(async shift => {
+            await daysData[i].shifts.map(async shift => {
                 shifts.push({
                     guys: shift.guys,
                     timeIn: shift.timeIn,
@@ -59,17 +60,21 @@ const CreateSchedule = () => {
                 });
             })
             days.push({
-                date: day.date,
+                date: daysData[i].date,
                 shifts
             })
-        })
+            if (i === daysData.length - 1) {
+                issuedDate = daysData[i].date;
+            }
+        }
         let temp = {
             invNumber,
             company,
             location,
-            days,
+            daysData: days,
             createdOn,
-            editedOn
+            editedOn,
+            issuedDate
         };
         return temp;
     };

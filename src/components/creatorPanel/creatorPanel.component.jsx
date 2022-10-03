@@ -187,7 +187,6 @@ const CreatorPanel = () => {
             dispatch(updateCurrentDay(current.day + 1))
             dispatch(updateKind("days"))
         } else if (current.day === scheduleDocument.daysData.length && current.shift === scheduleDocument.daysData[current.day - 1].shifts.length && current.employee === scheduleDocument.daysData[current.day - 1].shifts[current.shift - 1].guys.length ) {
-            console.log("renderer", ReactPDF);
             ReactPDF.renderToFile(<SchedulePDF schedule={scheduleDocument} />, `/test.pdf`);
         } else {
             dispatch(updateCurrentEmployee(current.employee + 1));

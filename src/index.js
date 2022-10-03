@@ -12,6 +12,7 @@ import App from './containers/App';
 import Dashboard from './pages/dashboard/dashboard.page';
 import Schedules from './pages/schedules/schedules.page';
 import CreateSchedules from './pages/createSchedule/createSchedule.pages'
+import Invoices from './pages/invoices/invoices.page';
 
 import reportWebVitals from './reportWebVitals';
 import './index.scss';
@@ -27,7 +28,7 @@ root.render(
           <Route exact path="/" element={<App />} >
             <Route index element={<Dashboard />} />
             <Route exact path='schedules' element={<Schedules />} />
-            <Route exact path='invoices' element={<Schedules />} />
+            <Route exact path='invoices' element={<Invoices />} />
             <Route exact path='schedules/new' element={<CreateSchedules />} />
           </Route>
         </Routes>

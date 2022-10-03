@@ -51,7 +51,6 @@ const CreatorInput = ({type, id, label, subLabel, action, lowest, selected, entr
             const group = await getDocs(collection(db, kind));
             const items = [];
             group.forEach(doc => {
-                console.count(doc.id)
                 items.push([doc.id.replaceAll("_", " ")]);
             })
             setOptions(items);
