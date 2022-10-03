@@ -1,9 +1,9 @@
 import React from 'react';
 import './primaryText.styles.scss';
 
-const PrimaryText = ({children, primary=true, onClick}) => {
+const PrimaryText = ({children, primary=true, onClick, style}) => {
     return (
-        <p onClick={async e => await onClick(children)} className={`${primary ? "primaryText" : "secondaryText"}`} >
+        <p style={style} onClick={async e => await onClick(children)} className={`${primary ? "primaryText" : "secondaryText"}`} >
             {children}
         </p>
     );

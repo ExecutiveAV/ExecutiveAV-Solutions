@@ -1,0 +1,24 @@
+.invoicePreviewBody {
+    display: inline-flex;
+    flex-direction: column;
+    &__day {
+        display: inline-flex;
+
+        & section {
+            margin-left: 20px;
+        }
+
+        & section:first-child {
+            margin-left: 0;
+        }
+    }
+}
+
+.daysHolder {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.total {
+    margin-left: auto;
+}

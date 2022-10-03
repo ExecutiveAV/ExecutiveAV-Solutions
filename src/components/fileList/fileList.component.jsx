@@ -40,13 +40,13 @@ const FileList = ({ type, filesData, kind }) => {
                 <PrimaryText >{
                     file.createdOn === null ?
                     "Date not found" :
-                    `${new Date(file.createdOn).getMonth()}/${new Date(file.createdOn).getDate()}/${new Date(file.createdOn).getFullYear()}`
+                    `${new Date(file.createdOn).toLocaleDateString('en-us')}`
                     }</PrimaryText>
                 <section className='fileList__files__file__withSubtitle' >
                     <Link to={`/${kind}/new`} >{
                         file.editedOn === null ?
                         "Date not found" :
-                        `${new Date(file.editedOn).getMonth()}/${new Date(file.editedOn).getDate()}/${new Date(file.editedOn).getFullYear()}`
+                        `${new Date(file.editedOn).toLocaleDateString('en-us')}`
                     }</Link>
                     {/* <PrimaryText primary={false} >{file.scheduleDocument.editedOn}</PrimaryText> */}
                 </section>
@@ -58,7 +58,7 @@ const FileList = ({ type, filesData, kind }) => {
     return (
         <section className='fileList' >
             <section className='fileList__header' >
-                <PrimaryText >{type}:</PrimaryText>
+                <PrimaryText style={{textTransform: "capitalize"}} >{kind}:</PrimaryText>
                 <PrimaryText >Created On:</PrimaryText>
                 <PrimaryText >Edited On:</PrimaryText>
             </section>
