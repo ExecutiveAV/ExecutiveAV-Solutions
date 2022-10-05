@@ -4,6 +4,7 @@ import './invoicePreviewBody.styles.scss';
 const InvoicePreviewBody = ({ invoice }) => {
 
     const [guys, setguys] = useState([]);
+
     const buildDays = (daysData) => {
         let temp = {};
         daysData.forEach(day => {
@@ -38,58 +39,70 @@ const InvoicePreviewBody = ({ invoice }) => {
         for (let i = 0; i < days.length; i++) {
             result.push((
                 <>
-                    <section className='invoicePreviewBody__day' >
-                        <section className='invoicePreviewBody__day__item ' >{new Date(days[i].date).toLocaleDateString()}</section>
-                        <section className='invoicePreviewBody__day__item ' >{`${days[i].timeIn} - ${days[i].timeOut}`}</section>
-                        <section className='invoicePreviewBody__day__item ' >{days[i].position}</section>
-                        <section className='invoicePreviewBody__day__item ' >{days[i].hrs}</section>
-                        <section className='invoicePreviewBody__day__item ' >{days[i].rate}</section>
-                        <section className='invoicePreviewBody__day__item ' >{days[i].ot}</section>
-                        <section className='invoicePreviewBody__day__item ' >{`${days[i].hrs * days[i].rate}`}</section>
+                    <section className={`invoicePreviewBody__tech__info__daysHolder__day ${((i + 1) % 2) !== 0 ? "odd" : ""}`} >
+                        <section className='invoicePreviewBody__tech__info__daysHolder__day__item ' >{new Date(days[i].date).toLocaleDateString()}</section>
+                        <section className='invoicePreviewBody__tech__info__daysHolder__day__item ' >{`${days[i].timeIn} - ${days[i].timeOut}`}</section>
+                        <section className='invoicePreviewBody__tech__info__daysHolder__day__item ' >{days[i].position}</section>
+                        <section className='invoicePreviewBody__tech__info__daysHolder__day__item ' >{days[i].hrs}</section>
+                        <section className='invoicePreviewBody__tech__info__daysHolder__day__item ' >{days[i].rate}</section>
+                        <section className='invoicePreviewBody__tech__info__daysHolder__day__item ' >{days[i].ot}</section>
+                        <section className='invoicePreviewBody__tech__info__daysHolder__day__item ' >{`${days[i].hrs * days[i].rate}`}</section>
                     </section>
                 </>
             ))
             total+=days[i].hrs * days[i].rate;
         }
+        
         return [result, total];
     };
 
     const renderTechs = (techs) => {
         const keys = Object.keys(techs);
         let temp = [];
+        let overall = 0;
         keys.forEach(tech => {
             let data = renderDays(techs[tech].days);
             temp.push(
-                (<section>
-                    <section>{tech}</section>
-                    <section>
-                        <section>
-                            <span>Date</span>
-                            <span>Position</span>
-                            <span>Time</span>
-                            <span>Rate</span>
-                            <span>Hrs</span>
-                            <span>OT</span>
-                            <span>Total</span>
+                (<section className='invoicePreviewBody__tech' >
+                    <section className='invoicePreviewBody__tech__name' >{tech}</section>
+                    <section className='invoicePreviewBody__tech__info' >
+                        <section className='invoicePreviewBody__tech__info__titles' >
+                            <span className='invoicePreviewBody__tech__info__titles__title' >Date</span>
+                            <span className='invoicePreviewBody__tech__info__titles__title' >Position</span>
+                            <span className='invoicePreviewBody__tech__info__titles__title' >Time</span>
+                            <span className='invoicePreviewBody__tech__info__titles__title' >Rate</span>
+                            <span className='invoicePreviewBody__tech__info__titles__title' >Hrs</span>
+                            <span className='invoicePreviewBody__tech__info__titles__title' >OT</span>
+                            <span className='invoicePreviewBody__tech__info__titles__title' >Total</span>
                         </section>
-                        <section className='daysHolder' >{data[0]}</section>
-                        <section>{data[1]}</section>
+                        <section className='invoicePreviewBody__tech__info__daysHolder' >{data[0]}</section>
+                        <section className='invoicePreviewBody__tech__info__total' >
+                            {data[1]}
+                        </section>
                     </section>
                 </section>)
-            )
+            );
+            overall += data[1];
         });
-        return temp;
+        return [temp, overall];
     };
 
     useEffect(() => {
         setguys(buildDays(invoice))
     }, [])
 
+    const content = renderTechs(guys);
+
     return (
         <section className='invoicePreviewBody' >
-        {
-            renderTechs(guys)
-        }
+            {
+                content[0]
+            }
+            <section >
+                <section >Gross Toal: {content[1]}</section>
+                <section >Finder's Fee: {content[1] * 0.04}</section>
+                <section >Amount Due: {content[1] * 0.96}</section>
+            </section>
         </section>
     );
 };
