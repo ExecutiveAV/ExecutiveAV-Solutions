@@ -97,6 +97,22 @@ const CreatorInput = ({type, id, label, subLabel, action, lowest, selected, entr
                 <input type="number" min={lowest} defaultValue={selected} className='creatorInputContainer__options' id={id} onChange={e => action(e.currentTarget.value)} />
             </section>
         )
+    } else if (type === "rate") {
+        return (
+            <section className='creatorInputContainer' >
+                <label className='creatorInputContainer__label' htmlFor={id} >{label}</label>
+                <section className='creatorInputContainer__times' >
+                    <section className='creatorInputContainer__times__time' >
+                        <label >{subLabel[0]}</label>
+                        <input type="number" className='creatorInputContainer__options' id={`${id}A`} onChange={e => action(e.currentTarget.value, "clientRate")} />
+                    </section>
+                    <section className='creatorInputContainer__times__time' >
+                        <label >{subLabel[1]}</label>
+                        <input type="number" className='creatorInputContainer__options' id={`${id}B`} onChange={e => action(e.currentTarget.value, "employeeRate")} />
+                    </section>
+                </section>
+            </section>
+        )
     } else if (type === "date") {
         return (
             <section className='creatorInputContainer' >

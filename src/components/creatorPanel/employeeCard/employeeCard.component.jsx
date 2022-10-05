@@ -13,7 +13,7 @@ import { didUploadChecker } from '../../../redux/portal/newEntryPortal.slice';
 
 
 
-const EmployeeCard = ({ current, employeeGoBack, updateEmployeeWalkaway, updateEmployeeInTime, updateEmployeeName, updateEmployeeOutTime, updateEmployeePosition, goToNextEmployee }) => {
+const EmployeeCard = ({ current, employeeGoBack, updateEmployeeWalkaway, updateEmployeeInTime, updateEmployeeName, updateEmployeeOutTime, updateEmployeePosition, goToNextEmployee, updateRate }) => {
 
     const dispatch = useDispatch();
     const [isFristLoad, setFirstLoad] = useState(true)
@@ -58,6 +58,7 @@ const EmployeeCard = ({ current, employeeGoBack, updateEmployeeWalkaway, updateE
             <CreatorInput type="options" label={`Employee ${current.employee} for shift ${current.shift}?`} subLabel={`For ${current.date}`} action={updateEmployeeName} entryType="tech" />
             <CreatorInput type="options" label="What Position?" action={updateEmployeePosition} entryType="position" />
             <CreatorInput type="in&out" label="Time?" subLabel={["In:", "Out:"]} action={[updateEmployeeInTime, updateEmployeeOutTime]} />
+            <CreatorInput type="rate" label="Rate:"  action={updateRate} subLabel={["Client Rate:", "Employee Rate:"]} />
             <CreatorInput type="toggle" label="Walkaway?" selected={true} action={updateEmployeeWalkaway} />
             <section className="creatorPanel__initialQuestionButton" >
                 <MainButton content="Back" action={employeeGoBack} />

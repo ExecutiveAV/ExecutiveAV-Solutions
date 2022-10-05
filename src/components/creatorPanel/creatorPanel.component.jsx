@@ -45,6 +45,7 @@ const CreatorPanel = () => {
         walkaway: true,
         timeIn: "",
         timeOut: "",
+        rate: 30
     });
 
     const updateCompany = (company) => {
@@ -176,6 +177,12 @@ const CreatorPanel = () => {
         dispatch(updateSchedule(temp));
     }
 
+    const updateRate = (rate, kind) => {
+        let temp = JSON.parse(JSON.stringify(scheduleDocument));
+        temp.daysData[current.day - 1].shifts[current.shift - 1].guys[current.employee - 1][kind] = rate;
+        dispatch(updateSchedule(temp));
+    }
+
     const goToNextEmployee = () => {
         if (current.employee === scheduleDocument.daysData[current.day - 1].shifts[current.shift - 1].guys.length && current.shift !== scheduleDocument.daysData[current.day - 1].shifts.length) {
             dispatch(updateCurrentEmployee(1));
@@ -262,7 +269,7 @@ const CreatorPanel = () => {
                 kind === "days" ? DayQuestion(current.day) :
                 kind === "backToInitialQuestion" ? BackToInitialQuestion(company, invNumber, location, daysData.length) :
                 kind === "shifts" ?
-                    <EmployeeCard current={current} employeeGoBack={employeeGoBack} updateEmployeeWalkaway={updateEmployeeWalkaway} updateEmployeeInTime={updateEmployeeInTime} updateEmployeeName={updateEmployeeName} updateEmployeeOutTime={updateEmployeeOutTime} updateEmployeePosition={updateEmployeePosition} goToNextEmployee={goToNextEmployee} /> :
+                    <EmployeeCard current={current} updateRate={updateRate} employeeGoBack={employeeGoBack} updateEmployeeWalkaway={updateEmployeeWalkaway} updateEmployeeInTime={updateEmployeeInTime} updateEmployeeName={updateEmployeeName} updateEmployeeOutTime={updateEmployeeOutTime} updateEmployeePosition={updateEmployeePosition} goToNextEmployee={goToNextEmployee} /> :
                 ""
             }
             {
