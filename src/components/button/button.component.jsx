@@ -1,10 +1,10 @@
 import React from 'react';
 import './button.styles.scss';
 
-const Button = ({ children, customStyle }) => {
+const Button = ({ children, customStyle, onClick }) => {
     return (
-        <section className='button' >
-            <section className={customStyle} >{children}</section>
+        <section onClick={onClick} className={`button ${customStyle}`} >
+            <section >{children}</section>
         </section>
     );
 };

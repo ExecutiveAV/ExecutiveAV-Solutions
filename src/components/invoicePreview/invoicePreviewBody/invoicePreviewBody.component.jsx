@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { currencyFormatter } from '../../../utils/jsUtils/formatters';
 import './invoicePreviewBody.styles.scss';
 
 const InvoicePreviewBody = ({ invoice }) => {
@@ -22,7 +23,7 @@ const InvoicePreviewBody = ({ invoice }) => {
                         position: guy.position,
                         hrs: parseInt(guy.timeOut.slice(0, 2)) - parseInt(guy.timeIn.slice(0, 2)),
                         walkaway: guy.walkaway,
-                        rate: 30,
+                        rate: guy.clientRate,
                         ot: parseInt(guy.timeOut.slice(0, 2)) - parseInt(guy.timeIn.slice(0, 2)) - (parseInt(guy.timeOut.slice(0, 2)) - parseInt(guy.timeIn.slice(0, 2)) === 10 ? 10 : 5),
                         name: guy.name
                     };
@@ -68,8 +69,8 @@ const InvoicePreviewBody = ({ invoice }) => {
                     <section className='invoicePreviewBody__tech__info' >
                         <section className='invoicePreviewBody__tech__info__titles' >
                             <span className='invoicePreviewBody__tech__info__titles__title' >Date</span>
-                            <span className='invoicePreviewBody__tech__info__titles__title' >Position</span>
                             <span className='invoicePreviewBody__tech__info__titles__title' >Time</span>
+                            <span className='invoicePreviewBody__tech__info__titles__title' >Position</span>
                             <span className='invoicePreviewBody__tech__info__titles__title' >Rate</span>
                             <span className='invoicePreviewBody__tech__info__titles__title' >Hrs</span>
                             <span className='invoicePreviewBody__tech__info__titles__title' >OT</span>
@@ -98,10 +99,10 @@ const InvoicePreviewBody = ({ invoice }) => {
             {
                 content[0]
             }
-            <section >
-                <section >Gross Toal: {content[1]}</section>
-                <section >Finder's Fee: {content[1] * 0.04}</section>
-                <section >Amount Due: {content[1] * 0.96}</section>
+            <section className='invoicePreviewBody__totals' >
+                <section className='invoicePreviewBody__totals__total' >Gross Toal: {currencyFormatter.format(content[1])}</section>
+                <section className='invoicePreviewBody__totals__total' >Finder's Fee: {currencyFormatter.format(content[1] * 0.04)}</section>
+                <section className='invoicePreviewBody__totals__total' >Amount Due: {currencyFormatter.format(content[1] * 0.96)}</section>
             </section>
         </section>
     );

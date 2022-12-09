@@ -6,7 +6,7 @@ import UserIcon from './userIcon/userIcon.component';
 const SideBar = () => {
     return (
         <section className='sideBar' >
-            <UserIcon userInitials={"AB"} />
+            <UserIcon />
         </section>
     );
 };
